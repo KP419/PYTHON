@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask , request
 
 import json
 
@@ -18,4 +18,26 @@ def about():
     me= {"name": "Kory Plotts"}
     return json.dumps(me)
 
-app.run(debug=True)
+@app.get("/version")
+def version():
+    version = {"name": "mouse", "version": "2", "build": 123456}
+    return json.dumps(version)
+
+product = []
+
+@app.get("/api/products")
+def get_products():
+
+    return json.dumps(product)
+
+@app.post("/api/products")
+def save_products():
+    product = request.get_json()
+    print(product)
+
+    product.append(product)
+    return json.dumps(product)
+
+
+
+
