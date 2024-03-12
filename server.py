@@ -38,6 +38,4 @@ def save_products():
     product.append(product)
     return json.dumps(product)
 
-
-
-
+app.run(debug=True)
