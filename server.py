@@ -1,6 +1,7 @@
 from flask import Flask , request
 
 import json
+from config import db
 
 app = Flask(__name__)
 
@@ -30,12 +31,19 @@ def get_products():
 
     return json.dumps(product)
 
+def fix_id(obj):
+    obj["_id"]=str(obj["_id"])
+    return obj
+
 @app.post("/api/products")
 def save_products():
     product = request.get_json()
+    
     print(product)
 
-    product.append(product)
-    return json.dumps(product)
+    #product.append(product)
+    db.products.insert_one(product)
+    
+    return json.dumps(fix_id(product))
 
 app.run(debug=True)
